@@ -1,0 +1,57 @@
+
+body {
+    font-family: 'Arial', 'Verdana', 'Helvetica', sans-serif; /* Standard sans-serif web font for sales data */
+    background-color: white; /* Page Background */
+    color: #000000; /* Specified font color for text */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Righteous', cursive; /* Custom sans-serif Google Font for heading tags */
+    color: #ff4500; /* Specified font color for heading tags */
+}
+
+p {
+    font-family: 'Righteous', cursive; /* Custom sans-serif Google Font for heading tags */
+    color: #000000; /* Specified font color for heading tags */
+}
+
+ul {
+    font-family: 'Righteous', cursive; /* Custom sans-serif Google Font for heading tags */
+    color: #000000; /* Specified font color for heading tags */
+}
+
+header {
+    background-color: black; /* Header background */
+    color: white; /* Font color for header text */
+    padding: 10px;
+    text-align: center;
+}
+
+nav {
+    background-color: #fa8072; /* Salmon background for navigation */
+    padding: 5px;
+    text-align: center;
+}
+
+nav a {
+    color: black; /* Font color for navigation link text */
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.main-content {
+    padding: 20px;
+    text-align: center;
+}
+
+/* New style for bulleted list */
+.locations-list {
+    list-style-type: none; /* Remove default bullet points */
+    padding: 0; /* Remove default padding */
+    text-align: center;
+}
+
+.locations-list li {
+    display: inline-block; /* Display list items horizontally */
+    margin-right: 10px; /* Adjust the space between list items */
+}
