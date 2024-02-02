@@ -1,86 +1,101 @@
-// Constructor function for Salmon Cookie Stand
-function SalmonCookieStand(location, minCustomers, maxCustomers, avgCookiesPerCustomer) {
-    this.location = location;
-    this.minCustomers = minCustomers;
-    this.maxCustomers = maxCustomers;
-    this.avgCookiesPerCustomer = avgCookiesPerCustomer;
-    this.cookiesPerHour = [];
-    this.dailyTotal = 0;
+'use strict';
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }
-
-// Method to calculate random customers and populate cookiesPerHour array
-SalmonCookieStand.prototype.calculateCookiesPerHour = function () {
-    for (let i = 6; i <= 19; i++) {
-        let customers = Math.floor(Math.random() * (this.maxCustomers - this.minCustomers + 1) + this.minCustomers);
-        let cookies = Math.round(customers * this.avgCookiesPerCustomer);
-        this.cookiesPerHour.push(cookies);
-        this.dailyTotal += cookies;
-    }
+function displayArrayAsTable(data) {
+}
+function City(cityName, minCustomers, maxCustomers, avgCookiesPerCustomer) {
+  this.cityName = cityName;
+  this.minCustomers = minCustomers;
+  this.maxCustomers = maxCustomers;
+  this.avgCookiesPerCustomer = avgCookiesPerCustomer;
+  this.hourlySales = [];
+  this.dailyTotal = 0;
+  this.row = document.createElement('tr');
+  this.calculateDailyTotal(); 
+}
+City.prototype.calculateDailyTotal = function () {
+  this.dailyTotal = this.hourlySales.reduce((acc, val) => acc + val, 0);
+};
+City.prototype.simulateHourlySales = function () {
+  let randomCustomers = getRandomInt(this.minCustomers, this.maxCustomers);
+  let cookiesPurchased = Math.floor(randomCustomers * this.avgCookiesPerCustomer);
+  this.hourlySales.push(cookiesPurchased);
+  this.calculateDailyTotal(); 
+  return cookiesPurchased;
+};
+City.prototype.drawRow = function () {
+  createCell(this.cityName, this.row);
+  for (let i = 0; i < this.hourlySales.length; i++) {
+    createCell(this.hourlySales[i], this.row);
+  }
+  createCell(this.dailyTotal, this.row);
 };
 
-// Method to render the table row for the Salmon Cookie Stand
-SalmonCookieStand.prototype.render = function () {
-    const tableRow = document.createElement('tr');
-    tableRow.innerHTML = `<td>${this.location}</td>`;
-    for (let i = 0; i < this.cookiesPerHour.length; i++) {
-        tableRow.innerHTML += `<td>${this.cookiesPerHour[i]}</td>`;
-    }
-    tableRow.innerHTML += `<td>${this.dailyTotal}</td>`;
-    return tableRow;
-};
+let seattle = new City("Seattle", 23, 65, 6.3);
+let tokyo = new City("Tokyo", 3, 24, 1.2);
+let dubai = new City("Dubai", 11, 38, 3.7);
+let paris = new City("Paris", 20, 38, 2.3);
+let lima = new City("Lima", 2, 16, 4.6);
 
-// Create instances for each Salmon Cookie Stand
-const seattle = new SalmonCookieStand('Seattle', 23, 65, 6.3);
-const tokyo = new SalmonCookieStand('Tokyo', 3, 24, 1.2);
-const dubai = new SalmonCookieStand('Dubai', 11, 38, 3.7);
-const paris = new SalmonCookieStand('Paris', 20, 38, 2.3);
-const lima = new SalmonCookieStand('Lima', 2, 16, 4.6);
+let cities = [seattle, tokyo, dubai, paris, lima];
 
-// Calculate cookies per hour for each Salmon Cookie Stand
-seattle.calculateCookiesPerHour();
-tokyo.calculateCookiesPerHour();
-dubai.calculateCookiesPerHour();
-paris.calculateCookiesPerHour();
-lima.calculateCookiesPerHour();
+for (let hour = 6; hour <= 20; hour++) {
+  cities.forEach(function (city) {
+    city.simulateHourlySales();
+  });
+}
+let tHeadElement = document.getElementById('table-data');
+let tBodyElement = document.getElementById('daily-totals');
 
-// Render table header
-function renderTableHeader() {
-    const tableHeader = document.createElement('tr');
-    tableHeader.innerHTML = '<th></th>';
-    for (let i = 6; i <= 19; i++) {
-        tableHeader.innerHTML += `<th>${i}:00</th>`;
-    }
-    tableHeader.innerHTML += '<th>Daily Location Total</th>';
-    return tableHeader;
+let headerRow = document.createElement('tr');
+createCell('', headerRow); 
+for (let hour = 6; hour <= 20; hour++) {
+  createCell(hour <= 12 ? hour + 'am' : (hour - 12) + 'pm', headerRow);
+}
+createCell('Daily Totals', headerRow); 
+tHeadElement.appendChild(headerRow);
+
+cities.forEach(function (city) {
+  city.drawRow();
+  tBodyElement.appendChild(city.row);
+});
+
+let totalColumn = document.createElement('tr');
+createCell('Location Totals', totalColumn); 
+for (let i = 0; i < seattle.hourlySales.length; i++) {
+  let hourlyTotal = cities.reduce((acc, city) => acc + city.hourlySales[i], 0);
+  createCell(hourlyTotal, totalColumn);
+}
+createCell(cities.reduce((acc, city) => acc + city.dailyTotal, 0), totalColumn);
+tBodyElement.appendChild(totalColumn); 
+
+function createCell(value, row) {
+  let cell = document.createElement('td');
+  cell.textContent = value;
+  row.appendChild(cell);
 }
 
-// Render table footer with totals
-function renderTableFooter() {
-    const tableFooter = document.createElement('tr');
-    tableFooter.innerHTML = '<td>Totals</td>';
-    for (let i = 6; i <= 19; i++) {
-        let hourTotal = 0;
-        for (const stand of [seattle, tokyo, dubai, paris, lima]) {
-            hourTotal += stand.cookiesPerHour[i - 6];
-        }
-        tableFooter.innerHTML += `<td>${hourTotal}</td>`;
-    }
-    tableFooter.innerHTML += '<td></td>'; // Add an empty cell for the Daily Grand Total
-    return tableFooter;
+document.getElementById('table-form').addEventListener('submit', handleForm);
+
+function handleForm(event) {
+  event.preventDefault();
+  
+  let name = event.target.location.value
+  let minCustomers = parseInt(event.target['min-customers'].value);
+  let maxCustomers = parseInt(event.target['max-customers'].value);
+  let avgCookiesPerCustomer = parseFloat(event.target['avg-cookies'].value);
+  
+  
+  let newCity = new City(name, minCustomers, maxCustomers, avgCookiesPerCustomer);
+  
+  for (let hour = 6; hour <= 20; hour++) {
+    newCity.simulateHourlySales();
+  }
+  
+
+  newCity.drawRow();
+
+
+  document.getElementById('table-data').appendChild(newCity.row);
 }
-
-// Render the entire table
-function renderTable() {
-    const table = document.createElement('table');
-    table.appendChild(renderTableHeader());
-
-    for (const stand of [seattle, tokyo, dubai, paris, lima]) {
-        table.appendChild(stand.render());
-    }
-
-    table.appendChild(renderTableFooter());
-    document.body.appendChild(table);
-}
-
-// Call the renderTable function to display the table
-renderTable();
