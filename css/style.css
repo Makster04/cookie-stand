@@ -1,14 +1,15 @@
-
 body {
     font-family: 'Arial', 'Verdana', sans-serif;
     background-color: white;
-    color: #333; /* Default text color */
+    color: #333;
+    /* Default text color */
     margin: 0;
 }
 
 header {
     background-color: black;
-    color: salmon; /* Header text color */
+    color: salmon;
+    /* Header text color */
     padding: 20px;
     text-align: center;
 }
@@ -40,4 +41,20 @@ ul {
 hr {
     border: 1px solid salmon;
     margin: 20px 0;
+}
+
+/* Add the following styles for the table */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 8px;
+    border: 1px solid #ddd; /* Add borders to cells */
+}
+
+td.numeric-cell {
+    text-align: center; /* Center-align numeric cells */
+    font-weight: bold; /* Make numeric cells bold */
 }

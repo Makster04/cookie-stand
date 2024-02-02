@@ -120,3 +120,12 @@ function handleForm(event) {
 
   document.getElementById('table-data').appendChild(newCity.row);
 }
+function createCell(value, row) {
+    let cell = document.createElement('td');
+    cell.textContent = value;
+    if (!isNaN(value)) {
+      // Add a class for styling numbers
+      cell.classList.add('numeric-cell');
+    }
+    row.appendChild(cell);
+  }
