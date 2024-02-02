@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="css/reset.css">
-    <link href="css/style.css" rel="stylesheet" type="text/css">
     <style>
         body {
             font-family: 'Arial', 'Verdana', sans-serif;
@@ -18,13 +16,18 @@
             text-align: center;
         }
 
-        h1, h2, h3 {
+        h1 {
             font-family: 'Righteous', sans-serif;
             color: salmon;
         }
 
+       h2, h3 {
+            font-family: 'Righteous', sans-serif;
+            color: rgb(125, 86, 86);
+        }
+
         a {
-            color: black;
+            color: rgb(255, 0, 0);
         }
 
         div {
@@ -54,7 +57,7 @@
             <fieldset>
                 <legend>Add a new store to the table!!</legend>
                 <div class="input-container">
-                <label for="location-name">Location Name: </label>
+                <label for="location-name">Name of Location: </label>
                 <input id="location-name" name="location" type="text" placeholder="Ex:Seattle">
                 </div>
                 <div class="input-container">
@@ -70,7 +73,7 @@
                 <input id="avg-cookies" name="avg-cookies" type="number" placeholder="10">
                 </div>
                 <div id="button-container">
-                <button type="submit">Click Here to Add!!</button>
+                <button type="submit">Submit</button>
                 </div>
             </fieldset>
         </form>
