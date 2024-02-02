@@ -13,13 +13,18 @@ header {
     text-align: center;
 }
 
-h1, h2, h3 {
+h1 {
     font-family: 'Righteous', sans-serif;
     color: salmon;
 }
 
+h2, h3 {
+    font-family: 'Righteous', sans-serif;
+    color: rgb(125, 86, 86);
+}
+
 a {
-    color: black;
+    color: rgb(255, 0, 0);
 }
 
 div {
