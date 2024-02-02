@@ -18,7 +18,8 @@ h1 {
     color: salmon;
 }
 
-h2, h3 {
+h2,
+h3 {
     font-family: 'Righteous', sans-serif;
     color: rgb(125, 86, 86);
 }
